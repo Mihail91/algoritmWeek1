@@ -30,9 +30,9 @@ public class Percolation implements PercolationInterface {
     // open site (row, col) if it is not open already
     @Override
     public void open(int row, int col) {
-        check(row);
-        check(col);
-        array[row][col] = 1;
+        if (!isOpen(row, col)) {
+            array[row][col] = row * col;
+        }
     }
     // is site (row, col) open?
     @Override
