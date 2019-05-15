@@ -2,13 +2,9 @@
  * Created by Mike on 12.05.2019.
  */
 
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
 public class Percolation implements PercolationInterface {
 
-    private int[][] array;
+    private int[] array;
     private int numb;
     // create n-by-n grid, with all sites blocked
     public Percolation(int n){
@@ -16,11 +12,9 @@ public class Percolation implements PercolationInterface {
             throw new IllegalArgumentException();
         }
         numb = n;
-        array = new int[n][n];
-        for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < n + 1; j++) {
-                array[i][j] = 0;
-            }
+        array = new int[n*n];
+        for (int i = 1; i < n*n + 1; i++) {
+            array[i] = 0;
         }
     }
 
@@ -31,7 +25,8 @@ public class Percolation implements PercolationInterface {
     @Override
     public void open(int row, int col) {
         if (!isOpen(row, col)) {
-            array[row][col] = row * col;
+            int position = (row - 1) * numb + col;
+            array[position] = position;
         }
     }
     // is site (row, col) open?
@@ -39,24 +34,29 @@ public class Percolation implements PercolationInterface {
     public boolean isOpen(int row, int col) {
         check(row);
         check(col);
-        return array[row][col] != 0;
+        int position = (row - 1) * numb + col;
+        return array[position] != 0;
     }
     // is site (row, col) full?
     @Override
     public boolean isFull(int row, int col) {
         check(row);
         check(col);
+        if (isOpen(row, col)) {
+            int rootNumb = root((row - 1) * numb + col);
+            if (rootNumb <= numb){
+                return true;
+            }
+        }
         return false;
     }
     // number of open sites
     @Override
     public int numberOfOpenSites() {
         int count = 0;
-        for (int i = 1; i <= numb; i++) {
-            for (int j = 1; j <= numb ; j++) {
-                if (array[i][j] == 1){
-                    count++;
-                }
+        for (int i = 1; i <= numb*numb; i++) {
+            if (array[i] != 0){
+                count++;
             }
         }
         return count;
@@ -64,11 +64,9 @@ public class Percolation implements PercolationInterface {
     // does the system percolate?
     @Override
     public boolean percolates() {
-        for (int i = 1; i <= numb ; i++) {
-            if (array[numb][i] == 1){
-                if (isFull(numb, i)){
-                    return true;
-                }
+        for (int i = 0; i < numb ; i++) {
+            if (isFull(numb, numb - i)){
+                return true;
             }
         }
         return false;
@@ -78,5 +76,21 @@ public class Percolation implements PercolationInterface {
         if (n > numb || n <= 0){
             throw new IllegalArgumentException();
         }
+    }
+
+    private void union(int rowOpen, int colOpen, int row, int col){
+        check(row);
+        check(col);
+
+    }
+
+    private int root(int i)
+    {
+        while (i != array[i])
+        {
+            array[i] = array[array[i]];
+            i = array[i];
+        }
+        return i;
     }
 }
