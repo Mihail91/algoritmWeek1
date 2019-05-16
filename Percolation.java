@@ -81,6 +81,14 @@ public class Percolation implements PercolationInterface {
     private void union(int rowOpen, int colOpen, int row, int col){
         check(row);
         check(col);
+        int p = (rowOpen-1)*numb+colOpen;
+        int q = (row-1)*numb+col;
+
+        int i = root(p);
+        int j = root(q);
+        if (i == j) return;
+        if (i > j) { array[i] = j; }
+        else { array[j] = i; }
 
     }
 
@@ -93,4 +101,10 @@ public class Percolation implements PercolationInterface {
         }
         return i;
     }
+
+    private boolean connected(int p, int q)
+    {
+        return root(p) == root(q);
+    }
+
 }
