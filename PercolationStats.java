@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdRandom;
 
 
-public class PercolationStats implements PercolationStatsInterface {
+public class PercolationStats {
     private int numb;
     private int repeat;
     private double[] means;
@@ -45,7 +45,7 @@ public class PercolationStats implements PercolationStatsInterface {
 
     }
     // sample mean of percolation threshold
-    @Override
+    
     public double mean() {
         if (meansResult == 0) {
             double m = 0;
@@ -57,7 +57,7 @@ public class PercolationStats implements PercolationStatsInterface {
         return meansResult;
     }
     // sample standard deviation of percolation threshold
-    @Override
+    
     public double stddev() {
         if (stddevResult == 0){
             double std = 0;
@@ -69,12 +69,12 @@ public class PercolationStats implements PercolationStatsInterface {
         return stddevResult;
     }
     // low  endpoint of 95% confidence interval
-    @Override
+    
     public double confidenceLo() {
         return mean() - 1.96 * stddev()/Math.sqrt(repeat);
     }
     // high endpoint of 95% confidence interval
-    @Override
+    
     public double confidenceHi() {
         return mean() + 1.96 * stddev()/Math.sqrt(repeat);
     }

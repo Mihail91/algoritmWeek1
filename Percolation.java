@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.StdIn;
  * Created by Mike on 12.05.2019.
  */
 
-public class Percolation implements PercolationInterface {
+public class Percolation {
 
     private int[] array;
     private int[] size;
@@ -38,7 +38,7 @@ public class Percolation implements PercolationInterface {
 
     }
     // open site (row, col) if it is not open already
-    @Override
+    
     public void open(int row, int col) {
         if (!isOpen(row, col)) {
             int position = (row - 1) * numb + col;
@@ -51,7 +51,7 @@ public class Percolation implements PercolationInterface {
         }
     }
     // is site (row, col) open?
-    @Override
+    
     public boolean isOpen(int row, int col) {
         check(row);
         check(col);
@@ -59,7 +59,7 @@ public class Percolation implements PercolationInterface {
         return array[position] != 0;
     }
     // is site (row, col) full?
-    @Override
+    
     public boolean isFull(int row, int col) {
         check(row);
         check(col);
@@ -72,12 +72,12 @@ public class Percolation implements PercolationInterface {
         return false;
     }
     // number of open sites
-    @Override
+    
     public int numberOfOpenSites() {
         return count;
     }
     // does the system percolate?
-    @Override
+    
     public boolean percolates() {
         for (int i = 0; i < numb ; i++) {
             if (isFull(numb, numb - i)){
@@ -128,7 +128,7 @@ public class Percolation implements PercolationInterface {
         return root(p) == root(q);
     }
 
-    @Override
+    
     public String toString() {
         for (int i = 1; i <= numb*numb; i++) {
             System.out.print(array[i] > 0 ? "1 " : "0 ");
